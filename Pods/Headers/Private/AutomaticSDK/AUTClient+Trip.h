@@ -1,0 +1,1 @@
+../../../../AutomaticSDK/AUTClient+Trip.h
