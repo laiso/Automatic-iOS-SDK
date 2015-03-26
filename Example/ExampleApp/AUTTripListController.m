@@ -15,7 +15,7 @@
 
 @property (readwrite, nonatomic, strong) AFHTTPRequestOperation *currentRequest;
 
-@property (readwrite, nonatomic, strong) NSURL *nextPage;
+@property (readwrite, nonatomic, strong) NSURL *nextPageUrl;
 
 @property (readwrite, nonatomic, copy) NSArray *results;
 
@@ -69,7 +69,7 @@
         [self.currentRequest cancel];
 
         self.currentRequest = nil;
-        self.nextPage = nil;
+        self.nextPageUrl = nil;
     }
 
     __weak typeof(self) weakSelf = self;
@@ -84,9 +84,9 @@
             id nextPage = page[@"_metadata"][@"next"];
 
             if (nextPage == NSNull.null || nextPage == nil) {
-                self.nextPage = nil;
+                self.nextPageUrl = nil;
             } else {
-                self.nextPage = [NSURL URLWithString:nextPage];
+                self.nextPageUrl = [NSURL URLWithString:nextPage];
             }
         }
         failure:^(NSError *error){
@@ -99,7 +99,7 @@
 
     __weak typeof(self) weakSelf = self;
     self.currentRequest = [self.client
-        fetchPage:self.nextPage
+        fetchPage:self.nextPageUrl
         success:^(NSDictionary *page) {
             typeof(weakSelf) self = weakSelf;
 
@@ -112,9 +112,9 @@
             id nextPage = page[@"_metadata"][@"next"];
 
             if (nextPage == NSNull.null || nextPage == nil) {
-                self.nextPage = nil;
+                self.nextPageUrl = nil;
             } else {
-                self.nextPage = [NSURL URLWithString:nextPage];
+                self.nextPageUrl = [NSURL URLWithString:nextPage];
             }
         }
         failure:^(NSError *error){
@@ -152,7 +152,7 @@
     // Fetch more when the last row is displayed
     NSInteger numberOfRows = [tableView numberOfRowsInSection:indexPath.section];
     BOOL isLastRow = numberOfRows > 0 && (numberOfRows - 1) == indexPath.row;
-    if (isLastRow && self.nextPage != nil) {
+    if (isLastRow && self.nextPageUrl != nil) {
         [self fetchMore:self];
     }
 }
