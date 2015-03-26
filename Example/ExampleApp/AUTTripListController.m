@@ -72,7 +72,7 @@
         self.nextPage = nil;
     }
 
-    typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     self.currentRequest = [self.client
         fetchTripsForCurrentUserWithSuccess:^(NSDictionary *page){
             typeof(weakSelf) self = weakSelf;
@@ -97,7 +97,7 @@
 - (void)fetchMore:(id)sender {
     if (self.currentRequest.isExecuting) return;
 
-    typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     self.currentRequest = [self.client
         fetchPage:self.nextPage
         success:^(NSDictionary *page) {

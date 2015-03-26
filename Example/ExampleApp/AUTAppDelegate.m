@@ -82,7 +82,7 @@
 
 - (AUTLogInViewController *)logInController {
     if (_logInController == nil) {
-        typeof(self) weakSelf = self;
+        __weak typeof(self) weakSelf = self;
         _logInController = [[AUTLogInViewController alloc]
             initWithClient:self.client
             success:^{

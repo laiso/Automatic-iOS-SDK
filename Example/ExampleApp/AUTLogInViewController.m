@@ -53,7 +53,7 @@
 }
 
 - (void)logIn:(id)sender {
-    typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     [self.client
         authorizeWithScopes:(AUTClientScopesTrip | AUTClientScopesLocation)
         success:^{
