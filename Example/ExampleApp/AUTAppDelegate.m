@@ -48,21 +48,23 @@
     self.window.rootViewController = (credential ? self.navigationController : self.logInController);
     [self.window makeKeyAndVisible];
 
-    typeof(self) weakSelf = self;
-    if (credential.isExpired) {
-        [self.client
-            authorizeByRefreshingCredential:credential
-            success:^{
-                typeof(weakSelf) self = weakSelf;
-                [AFOAuthCredential storeCredential:self.client.credential withIdentifier:@"credential"];
-                [self.tripController refresh:self];
-            }
-            failure:^(NSError *error) {
-                NSLog(@"Failed to refresh credential with error: %@", error.localizedDescription);
-            }];
-    } else {
-        self.client.credential = credential;
-        [self.tripController refresh:self];
+    if (credential) {
+        __weak typeof(self) weakSelf = self;
+        if (credential.isExpired) {
+            [self.client
+                authorizeByRefreshingCredential:credential
+                success:^{
+                    typeof(weakSelf) self = weakSelf;
+                    [AFOAuthCredential storeCredential:self.client.credential withIdentifier:@"credential"];
+                    [self.tripController refresh:self];
+                }
+                failure:^(NSError *error) {
+                    NSLog(@"Failed to refresh credential with error: %@", error.localizedDescription);
+                }];
+        } else {
+            self.client.credential = credential;
+            [self.tripController refresh:self];
+        }
     }
 
     return YES;
