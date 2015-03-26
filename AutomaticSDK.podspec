@@ -1,9 +1,12 @@
 Pod::Spec.new do |s|
   s.name         = 'AutomaticSDK'
   s.version      = '0.0.1'
-  s.summary      = 'The official Automatic SDK for iOS.'
-  s.description  = 'A handy wrapper that makes authenticating with the '\
-                   'Automatic API a breeze.'
+  s.summary      = 'The best way to build iOS apps powered by Automatic'
+  s.description  = 'With the Automatic iOS SDK, your users can log in to your '\
+                   'app with their Automatic accounts. Think Facebook or '\
+                   'Twitter login, but rather than bringing a users\' social '\
+                   'graph, instead unlocking a wealth of automotive data that '\
+                   'you can use to supercharge your app.'
   s.homepage     = 'https://developer.automatic.com'
   s.license      = 'Apache 2.0'
   s.authors      = {
