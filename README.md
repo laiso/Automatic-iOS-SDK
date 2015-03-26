@@ -1,5 +1,7 @@
 # Automatic iOS SDK
 
+[![Build Status](https://travis-ci.org/Automatic/Automatic-iOS-SDK.svg?branch=master)](https://travis-ci.org/Automatic/Automatic-iOS-SDK)
+
 ---
 
 **Note: This SDK is in alpha. Please try it out and send us your feedback!**
