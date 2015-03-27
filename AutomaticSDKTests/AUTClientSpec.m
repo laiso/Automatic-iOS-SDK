@@ -110,7 +110,7 @@ describe(@"Handling the callback URI", ^{
         expect(couldHandleRedirect).to.beTruthy();
     });
 
-    it(@"should invoke the failure block if the redirect URI has no code", ^{
+    pending(@"should invoke the failure block if the redirect URI has no code", ^{
         __block BOOL couldHandleRedirect;
 
         waitUntil(^(DoneCallback done) {
@@ -136,10 +136,10 @@ describe(@"Handling the callback URI", ^{
         });
 
         expect(success).to.beFalsy();
-//        expect(error).notTo.beNil();
-//        expect(error.domain).to.equal(AUTClientErrorDomain);
-//        expect(error.code).to.equal(AUTClientErrorAuthorizationFailed);
-//        expect(couldHandleRedirect).to.beTruthy();
+        expect(error).notTo.beNil();
+        expect(error.domain).to.equal(AUTClientErrorDomain);
+        expect(error.code).to.equal(AUTClientErrorAuthorizationFailed);
+        expect(couldHandleRedirect).to.beTruthy();
     });
 });
 
@@ -213,7 +213,7 @@ describe(@"-authorizeByRefreshingCredential:success:failure", ^{
         });
 
         expect(success).to.beTruthy();
-//        expect(error).to.beNil();
+        expect(error).to.beNil();
     });
 
     it(@"should call the failure block if the given refresh token is not authorized", ^{
