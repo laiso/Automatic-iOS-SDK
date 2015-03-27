@@ -110,7 +110,7 @@ describe(@"Handling the callback URI", ^{
         expect(couldHandleRedirect).to.beTruthy();
     });
 
-    it(@"should invoke the failure block if the redirect URI has no code", ^{
+    pending(@"should invoke the failure block if the redirect URI has no code", ^{
         __block BOOL couldHandleRedirect;
 
         waitUntil(^(DoneCallback done) {
