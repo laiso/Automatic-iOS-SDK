@@ -7,6 +7,7 @@
 //
 
 #import <AutomaticSDK/AutomaticSDK.h>
+#import <libextobjc/EXTScope.h>
 #import "AUTLogInViewController.h"
 #import "AUTLogInView.h"
 
@@ -53,15 +54,15 @@
 }
 
 - (void)logIn:(id)sender {
-    __weak typeof(self) weakSelf = self;
+    @weakify(self);
     [self.client
         authorizeWithScopes:(AUTClientScopesTrip | AUTClientScopesLocation)
         success:^{
-            typeof(weakSelf) self = weakSelf;
+            @strongify(self);
             self.success();
         }
         failure:^(NSError *error) {
-            typeof(weakSelf) self = weakSelf;
+            @strongify(self);
             self.failure(error);
         }];
 }

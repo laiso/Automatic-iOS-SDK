@@ -9,6 +9,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import <AFOAuth2Manager/AFOAuth2Manager.h>
 #import <AutomaticSDK/AutomaticSDK.h>
+#import <libextobjc/EXTScope.h>
 
 #import "AUTAppDelegate.h"
 #import "AUTTripListController.h"
@@ -49,12 +50,12 @@
     [self.window makeKeyAndVisible];
 
     if (credential) {
-        __weak typeof(self) weakSelf = self;
+        @weakify(self);
         if (credential.isExpired) {
             [self.client
                 authorizeByRefreshingCredential:credential
                 success:^{
-                    typeof(weakSelf) self = weakSelf;
+                    @strongify(self);
                     [AFOAuthCredential storeCredential:self.client.credential withIdentifier:@"credential"];
                     [self.tripController refresh:self];
                 }
@@ -82,11 +83,11 @@
 
 - (AUTLogInViewController *)logInController {
     if (_logInController == nil) {
-        __weak typeof(self) weakSelf = self;
+        @weakify(self);
         _logInController = [[AUTLogInViewController alloc]
             initWithClient:self.client
             success:^{
-                typeof(weakSelf) self = weakSelf;
+                @strongify(self);
                 [AFOAuthCredential storeCredential:self.client.credential withIdentifier:@"credential"];
                 // Transition the app to the logged in state
                 self.window.rootViewController = self.navigationController;

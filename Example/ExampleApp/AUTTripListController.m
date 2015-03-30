@@ -8,6 +8,7 @@
 
 #import <AFNetworking/AFNetworking.h>
 #import <AutomaticSDK/AutomaticSDK.h>
+#import <libextobjc/EXTScope.h>
 
 #import "AUTTripListController.h"
 
@@ -72,10 +73,10 @@
         self.nextPageUrl = nil;
     }
 
-    __weak typeof(self) weakSelf = self;
+    @weakify(self);
     self.currentRequest = [self.client
         fetchTripsForCurrentUserWithSuccess:^(NSDictionary *page){
-            typeof(weakSelf) self = weakSelf;
+            @strongify(self);
 
             [self.refreshControl endRefreshing];
 
@@ -97,11 +98,11 @@
 - (void)fetchMore:(id)sender {
     if (self.currentRequest.isExecuting) return;
 
-    __weak typeof(self) weakSelf = self;
+    @weakify(self);
     self.currentRequest = [self.client
         fetchPage:self.nextPageUrl
         success:^(NSDictionary *page) {
-            typeof(weakSelf) self = weakSelf;
+            @strongify(self);
 
             [self.refreshControl endRefreshing];
 
