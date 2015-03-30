@@ -16,7 +16,7 @@
 
 @property (readwrite, nonatomic, strong) AFHTTPRequestOperation *currentRequest;
 
-@property (readwrite, nonatomic, strong) NSURL *nextPageUrl;
+@property (readwrite, nonatomic, strong) NSURL *nextPageURL;
 
 @property (readwrite, nonatomic, copy) NSArray *results;
 
@@ -70,7 +70,7 @@
         [self.currentRequest cancel];
 
         self.currentRequest = nil;
-        self.nextPageUrl = nil;
+        self.nextPageURL = nil;
     }
 
     @weakify(self);
@@ -85,9 +85,9 @@
             id nextPage = page[@"_metadata"][@"next"];
 
             if (nextPage == NSNull.null || nextPage == nil) {
-                self.nextPageUrl = nil;
+                self.nextPageURL = nil;
             } else {
-                self.nextPageUrl = [NSURL URLWithString:nextPage];
+                self.nextPageURL = [NSURL URLWithString:nextPage];
             }
         }
         failure:^(NSError *error){
@@ -100,7 +100,7 @@
 
     @weakify(self);
     self.currentRequest = [self.client
-        fetchPage:self.nextPageUrl
+        fetchPage:self.nextPageURL
         success:^(NSDictionary *page) {
             @strongify(self);
 
@@ -113,9 +113,9 @@
             id nextPage = page[@"_metadata"][@"next"];
 
             if (nextPage == NSNull.null || nextPage == nil) {
-                self.nextPageUrl = nil;
+                self.nextPageURL = nil;
             } else {
-                self.nextPageUrl = [NSURL URLWithString:nextPage];
+                self.nextPageURL = [NSURL URLWithString:nextPage];
             }
         }
         failure:^(NSError *error){
@@ -153,7 +153,7 @@
     // Fetch more when the last row is displayed
     NSInteger numberOfRows = [tableView numberOfRowsInSection:indexPath.section];
     BOOL isLastRow = numberOfRows > 0 && (numberOfRows - 1) == indexPath.row;
-    if (isLastRow && self.nextPageUrl != nil) {
+    if (isLastRow && self.nextPageURL != nil) {
         [self fetchMore:self];
     }
 }
