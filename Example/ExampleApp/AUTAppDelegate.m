@@ -9,6 +9,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import <AFOAuth2Manager/AFOAuth2Manager.h>
 #import <AutomaticSDK/AutomaticSDK.h>
+#import <libextobjc/EXTScope.h>
 
 #import "AUTAppDelegate.h"
 #import "AUTTripListController.h"
@@ -48,21 +49,23 @@
     self.window.rootViewController = (credential ? self.navigationController : self.logInController);
     [self.window makeKeyAndVisible];
 
-    typeof(self) weakSelf = self;
-    if (credential.isExpired) {
-        [self.client
-            authorizeByRefreshingCredential:credential
-            success:^{
-                typeof(weakSelf) self = weakSelf;
-                [AFOAuthCredential storeCredential:self.client.credential withIdentifier:@"credential"];
-                [self.tripController refresh:self];
-            }
-            failure:^(NSError *error) {
-                NSLog(@"Failed to refresh credential with error: %@", error.localizedDescription);
-            }];
-    } else {
-        self.client.credential = credential;
-        [self.tripController refresh:self];
+    if (credential) {
+        @weakify(self);
+        if (credential.isExpired) {
+            [self.client
+                authorizeByRefreshingCredential:credential
+                success:^{
+                    @strongify(self);
+                    [AFOAuthCredential storeCredential:self.client.credential withIdentifier:@"credential"];
+                    [self.tripController refresh:self];
+                }
+                failure:^(NSError *error) {
+                    NSLog(@"Failed to refresh credential with error: %@", error.localizedDescription);
+                }];
+        } else {
+            self.client.credential = credential;
+            [self.tripController refresh:self];
+        }
     }
 
     return YES;
@@ -80,11 +83,11 @@
 
 - (AUTLogInViewController *)logInController {
     if (_logInController == nil) {
-        typeof(self) weakSelf = self;
+        @weakify(self);
         _logInController = [[AUTLogInViewController alloc]
             initWithClient:self.client
             success:^{
-                typeof(weakSelf) self = weakSelf;
+                @strongify(self);
                 [AFOAuthCredential storeCredential:self.client.credential withIdentifier:@"credential"];
                 // Transition the app to the logged in state
                 self.window.rootViewController = self.navigationController;

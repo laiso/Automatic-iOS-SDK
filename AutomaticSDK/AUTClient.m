@@ -9,6 +9,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import <AFOAuth2Manager/AFHTTPRequestSerializer+OAuth2.h>
 #import <AFOAuth2Manager/AFOAuth2Manager.h>
+#import <libextobjc/EXTScope.h>
 
 #import "AUTClient.h"
 
@@ -167,11 +168,11 @@ const NSInteger AUTClientErrorAuthorizationFailed = 1;
             return YES;
         }
 
-        __weak typeof(self) weakSelf = self;
+        @weakify(self);
         [self
             authorizeWithCode:code
             success:^{
-                typeof(weakSelf) self = weakSelf;
+                @strongify(self);
 
                 if (self.pendingSuccessCallback != nil) {
                     self.pendingSuccessCallback();
@@ -205,12 +206,12 @@ const NSInteger AUTClientErrorAuthorizationFailed = 1;
         @"grant_type": @"authorization_code"
     };
 
-    __weak typeof(self) weakSelf = self;
+    @weakify(self);
     [self.OAuth2Manager
         authenticateUsingOAuthWithURLString:AUTClient.accessTokenEndpoint.absoluteString
         parameters:parameters
         success:^(AFOAuthCredential *credential) {
-            typeof(weakSelf) self = weakSelf;
+            @strongify(self);
 
             self.credential = credential;
 
@@ -231,12 +232,12 @@ const NSInteger AUTClientErrorAuthorizationFailed = 1;
         @"grant_type": @"refresh_token"
     };
 
-    __weak typeof(self) weakSelf = self;
+    @weakify(self);
     [self.OAuth2Manager
         authenticateUsingOAuthWithURLString:AUTClient.accessTokenEndpoint.absoluteString
         parameters:parameters
         success:^(AFOAuthCredential *credential) {
-            typeof(weakSelf) self = weakSelf;
+            @strongify(self);
 
             self.credential = credential;
 

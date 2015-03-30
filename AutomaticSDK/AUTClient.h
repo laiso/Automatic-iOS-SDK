@@ -94,7 +94,7 @@ extern NSString * const AUTClientErrorDomain;
 extern const NSInteger AUTClientErrorAuthorizationFailed;
 
 /**
- *  `AUTClient` allows you to authentica with the Automatic API and make
+ *  `AUTClient` allows you to authenticate with the Automatic API and make
  *  requests to it.
  */
 @interface AUTClient : NSObject
@@ -167,7 +167,7 @@ extern const NSInteger AUTClientErrorAuthorizationFailed;
  *  This method should only be called from 
  *  -[UIApplicationDelegate openURL:sourceApplication:annotation:]
  *
- *  @param openURL The URL you application was called with.
+ *  @param openURL The URL your application was called with.
  *
  *  @return `YES` if the receiver could handle the URL, `NO` otherwise.
  */

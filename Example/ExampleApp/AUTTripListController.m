@@ -8,6 +8,7 @@
 
 #import <AFNetworking/AFNetworking.h>
 #import <AutomaticSDK/AutomaticSDK.h>
+#import <libextobjc/EXTScope.h>
 
 #import "AUTTripListController.h"
 
@@ -15,7 +16,7 @@
 
 @property (readwrite, nonatomic, strong) AFHTTPRequestOperation *currentRequest;
 
-@property (readwrite, nonatomic, strong) NSURL *nextPage;
+@property (readwrite, nonatomic, strong) NSURL *nextPageURL;
 
 @property (readwrite, nonatomic, copy) NSArray *results;
 
@@ -69,13 +70,13 @@
         [self.currentRequest cancel];
 
         self.currentRequest = nil;
-        self.nextPage = nil;
+        self.nextPageURL = nil;
     }
 
-    typeof(self) weakSelf = self;
+    @weakify(self);
     self.currentRequest = [self.client
         fetchTripsForCurrentUserWithSuccess:^(NSDictionary *page){
-            typeof(weakSelf) self = weakSelf;
+            @strongify(self);
 
             [self.refreshControl endRefreshing];
 
@@ -84,9 +85,9 @@
             id nextPage = page[@"_metadata"][@"next"];
 
             if (nextPage == NSNull.null || nextPage == nil) {
-                self.nextPage = nil;
+                self.nextPageURL = nil;
             } else {
-                self.nextPage = [NSURL URLWithString:nextPage];
+                self.nextPageURL = [NSURL URLWithString:nextPage];
             }
         }
         failure:^(NSError *error){
@@ -97,11 +98,11 @@
 - (void)fetchMore:(id)sender {
     if (self.currentRequest.isExecuting) return;
 
-    typeof(self) weakSelf = self;
+    @weakify(self);
     self.currentRequest = [self.client
-        fetchPage:self.nextPage
+        fetchPage:self.nextPageURL
         success:^(NSDictionary *page) {
-            typeof(weakSelf) self = weakSelf;
+            @strongify(self);
 
             [self.refreshControl endRefreshing];
 
@@ -112,9 +113,9 @@
             id nextPage = page[@"_metadata"][@"next"];
 
             if (nextPage == NSNull.null || nextPage == nil) {
-                self.nextPage = nil;
+                self.nextPageURL = nil;
             } else {
-                self.nextPage = [NSURL URLWithString:nextPage];
+                self.nextPageURL = [NSURL URLWithString:nextPage];
             }
         }
         failure:^(NSError *error){
@@ -152,7 +153,7 @@
     // Fetch more when the last row is displayed
     NSInteger numberOfRows = [tableView numberOfRowsInSection:indexPath.section];
     BOOL isLastRow = numberOfRows > 0 && (numberOfRows - 1) == indexPath.row;
-    if (isLastRow && self.nextPage != nil) {
+    if (isLastRow && self.nextPageURL != nil) {
         [self fetchMore:self];
     }
 }

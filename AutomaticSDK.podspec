@@ -9,7 +9,8 @@ DESC
   s.license      = 'Apache 2.0'
   s.authors      = {
     'Robert Böhnke' => 'robb.bohnke@automatic.com',
-    'Eric Horacek' => 'eric@automatic.com'
+    'Eric Horacek' => 'eric@automatic.com',
+    'Sylvain Rebaud' => 'sylvain@automatic.com'
   }
   s.source       = {
     :git => 'https://github.com/Automatic/Automatic-iOS-SDK.git',
@@ -21,4 +22,5 @@ DESC
 
   s.dependency 'AFNetworking',    '~> 2.5'
   s.dependency 'AFOAuth2Manager', '~> 2.2'
+  s.dependency 'libextobjc/EXTScope'
 end
