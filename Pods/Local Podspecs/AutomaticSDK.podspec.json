@@ -1,8 +1,8 @@
 {
   "name": "AutomaticSDK",
   "version": "0.0.1",
-  "summary": "The official Automatic SDK for iOS.",
-  "description": "A handy wrapper that makes authenticating with the Automatic API a breeze.\n",
+  "summary": "The best way to build iOS apps powered by Automatic",
+  "description": "With the Automatic iOS SDK, your users can log in to your app with their Automatic accounts. Think Facebook or Twitter login, but rather than bringing a users' social graph, instead unlocking a wealth of automotive data that you can use to supercharge your app.",
   "homepage": "https://developer.automatic.com",
   "license": "Apache 2.0",
   "authors": {
