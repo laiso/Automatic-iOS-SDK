@@ -14,11 +14,11 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     button.backgroundColor = [UIColor colorWithRed:0.33f green:0.71f blue:0.92f alpha:1.0f];
     button.tintColor = [UIColor whiteColor];
-    button.layer.cornerRadius = 24.0;
+    button.layer.cornerRadius = 5.0;
     
-    CGFloat imageTextPadding = 15.0;
-    CGFloat horizontalInset = 30.0;
-    CGFloat verticalInset = 10.0;
+    CGFloat imageTextPadding = 13.0;
+    CGFloat horizontalInset = 15.0;
+    CGFloat verticalInset = 7.0;
     
     button.titleEdgeInsets = (UIEdgeInsets){
         .left = imageTextPadding,
@@ -32,7 +32,7 @@
         .right = imageTextPadding + horizontalInset
     };
     
-    button.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:16.0];
+    button.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:16.0];
     
     [button setImage:[UIImage imageNamed:@"AutomaticLogo"] forState:UIControlStateNormal];
     [button setTitle:@"Log in with Automatic" forState:UIControlStateNormal];
