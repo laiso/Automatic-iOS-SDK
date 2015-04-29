@@ -293,7 +293,7 @@ const NSInteger AUTClientErrorAuthorizationFailed = 1;
 
 @end
 
-extern void (^ __nullable AUTExtractResponseObject(void (^ __nullable callback)(NSDictionary * __nullable)))(AFHTTPRequestOperation * __nullable, id __nullable) {
+extern void (^ __nullable AUTExtractResponseObject(__nullable AUTResponseBlock callback))(AFHTTPRequestOperation * __nullable, id __nullable) {
     if (callback == nil) return nil;
 
     return ^(AFHTTPRequestOperation *_, id responseObject) {
@@ -301,7 +301,7 @@ extern void (^ __nullable AUTExtractResponseObject(void (^ __nullable callback)(
     };
 }
 
-extern void (^AUTExtractError(void (^callback)(NSError *)))(AFHTTPRequestOperation *, NSError *) {
+extern void (^ __nullable AUTExtractError(__nullable AUTFailureBlock callback))(AFHTTPRequestOperation * __nullable, NSError * __nullable) {
     if (callback == nil) return nil;
 
     return ^(AFHTTPRequestOperation *_, NSError *error) {
