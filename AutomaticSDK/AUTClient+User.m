@@ -12,7 +12,7 @@
 
 @implementation AUTClient (User)
 
-- (AFHTTPRequestOperation *)fetchCurrentUserWithSuccess:(void(^)(NSDictionary *))success failure:(void(^)(NSError *))failure {
+- (AFHTTPRequestOperation *)fetchCurrentUserWithSuccess:(nullable AUTResponseBlock)success failure:(nullable AUTFailureBlock)failure {
     return [self.requestManager
         GET:@"user/me/"
         parameters:nil
@@ -20,7 +20,7 @@
         failure:AUTExtractError(failure)];
 }
 
-- (AFHTTPRequestOperation *)fetchCurrentUserWithID:(NSString *)userID success:(void(^)(NSDictionary *))success failure:(void(^)(NSError *))failure {
+- (AFHTTPRequestOperation *)fetchCurrentUserWithID:(NSString *)userID success:(nullable AUTResponseBlock)success failure:(nullable AUTFailureBlock)failure {
     NSParameterAssert(userID != nil);
 
     return [self.requestManager

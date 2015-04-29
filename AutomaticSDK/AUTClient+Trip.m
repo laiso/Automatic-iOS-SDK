@@ -12,7 +12,7 @@
 
 @implementation AUTClient (Trip)
 
-- (AFHTTPRequestOperation *)fetchTripsForCurrentUserWithSuccess:(void(^)(NSDictionary *))success failure:(void(^)(NSError *))failure {
+- (AFHTTPRequestOperation *)fetchTripsForCurrentUserWithSuccess:(nullable AUTResponseBlock)success failure:(nullable AUTFailureBlock)failure {
     return [self.requestManager
         GET:@"trip/"
         parameters:nil
@@ -20,7 +20,7 @@
         failure:AUTExtractError(failure)];
 }
 
-- (AFHTTPRequestOperation *)fetchTripsForUserWithID:(NSString *)userID success:(void(^)(NSDictionary *))success failure:(void(^)(NSError *))failure {
+- (AFHTTPRequestOperation *)fetchTripsForUserWithID:(NSString *)userID success:(nullable AUTResponseBlock)success failure:(nullable AUTFailureBlock)failure {
     NSParameterAssert(userID != nil);
 
     return [self.requestManager
@@ -30,7 +30,7 @@
         failure:AUTExtractError(failure)];
 }
 
-- (AFHTTPRequestOperation *)fetchTripWithID:(NSString *)tripID success:(void(^)(NSDictionary *))success failure:(void(^)(NSError *))failure {
+- (AFHTTPRequestOperation *)fetchTripWithID:(NSString *)tripID success:(nullable AUTResponseBlock)success failure:(nullable AUTFailureBlock)failure {
     NSParameterAssert(tripID != nil);
 
     return [self.requestManager

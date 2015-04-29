@@ -8,29 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-// Allow the use of nullability attributes while keeping compatibility with
-// Xcode 6.1 and 6.2
-#if __has_feature(nullability)
-#define aut_nonnull nonnull
-#define aut_nullable nullable
-#define aut_null_unspecified null_unspecified
-#define __aut_nonnull __nonnull
-#define __aut_nullable __nullable
-#define __aut_null_unspecified __null_unspecified
-#else
-#define aut_nonnull
-#define aut_nullable
-#define aut_null_unspecified
-#define __aut_nonnull
-#define __aut_nullable
-#define __aut_null_unspecified
-#endif
-
-#pragma clang assume_nonnull begin
+NS_ASSUME_NONNULL_BEGIN
 
 @class AFHTTPRequestOperation;
 @class AFHTTPRequestOperationManager;
 @class AFOAuthCredential;
+
+typedef void(^AUTSuccessBlock)(void);
+
+typedef void(^AUTResponseBlock)(NSDictionary * __nullable);
+
+typedef void(^AUTFailureBlock)(NSError * __nullable);
 
 /**
  *  The different scopes an `AUTClient` can request.
@@ -117,7 +105,7 @@ extern const NSInteger AUTClientErrorAuthorizationFailed;
  *  See +[AFOAuthCredential storeCredential:withIdentifier:] on information how
  *  to persist this credential.
  */
-@property (readwrite, nonatomic, strong, aut_nullable) AFOAuthCredential *credential;
+@property (readwrite, nonatomic, strong, nullable) AFOAuthCredential *credential;
 
 /**
  *  The `AFHTTPRequestOperationManager` used by the client.
@@ -159,7 +147,7 @@ extern const NSInteger AUTClientErrorAuthorizationFailed;
  *  @param failure A block to be invoked with an error if the authorization
  *                 fails.
  */
-- (void)authorizeWithScopes:(AUTClientScopes)scopes success:(aut_nullable void(^)(void))success failure:(aut_nullable void(^)(__aut_nullable NSError *))failure;
+- (void)authorizeWithScopes:(AUTClientScopes)scopes success:(nullable AUTSuccessBlock)success failure:(nullable AUTFailureBlock)failure;
 
 /**
  *  Complete the authorization flow by calling this method.
@@ -184,7 +172,7 @@ extern const NSInteger AUTClientErrorAuthorizationFailed;
  *  @param failure    A block to be invoked with an error if the authorization
  *                    fails.
  */
-- (void)authorizeByRefreshingCredential:(AFOAuthCredential *)credential success:(aut_nullable void(^)(void))success failure:(aut_nullable void(^)(__aut_nullable NSError *))failure;
+- (void)authorizeByRefreshingCredential:(AFOAuthCredential *)credential success:(nullable AUTSuccessBlock)success failure:(nullable AUTFailureBlock)failure;
 
 @end
 
@@ -192,22 +180,23 @@ extern const NSInteger AUTClientErrorAuthorizationFailed;
  *  Converts a block that takes an `NSDictionary` as its only argument into one
  *  that can be used as a success callback with `AFHTTPRequestOperationManager`.
  *
- *  @param ^block The block to convert.
+ *  @param block The block to convert.
  *
  *  @return A block that can be used as a success callback to
  *          `AFHTTPRequestOperationManager` or `nil` if the block was `nil`.
  */
-extern void (^__aut_nullable AUTExtractResponseObject(void (^__aut_nullable block)(__aut_nullable NSDictionary *)))(__aut_nullable AFHTTPRequestOperation *, __aut_nullable id);
+extern void (^ __nullable AUTExtractResponseObject(__nullable AUTResponseBlock block))(AFHTTPRequestOperation * __nullable, id __nullable);
 
 /**
  *  Converts a block that takes an `NSError *` as its only argument into one
  *  that can be used as a failure callback with `AFHTTPRequestOperationManager`.
  *
- *  @param ^block The block to convert.
+ *  @param block The block to convert.
  *
  *  @return A block that can be used as a failure callback to
  *          `AFHTTPRequestOperationManager` or `nil` if the block was `nil`.
  */
-extern void (^__aut_nullable AUTExtractError(void (^__aut_nullable block)(__aut_nullable NSError *)))(__aut_nullable AFHTTPRequestOperation *, __aut_nullable NSError *);
+extern void (^ __nullable AUTExtractError(__nullable AUTFailureBlock block))(AFHTTPRequestOperation * __nullable, NSError * __nullable);
 
-#pragma clang assume_nonnull end
+NS_ASSUME_NONNULL_END
+

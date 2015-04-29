@@ -8,7 +8,7 @@
 
 #import <AutomaticSDK/AutomaticSDK.h>
 
-#pragma clang assume_nonnull begin
+NS_ASSUME_NONNULL_BEGIN
 
 @interface AUTClient (Pagination)
 
@@ -23,8 +23,8 @@
  *
  *  @return An `AFHTTPRequestOperation` representing the request.
  */
-- (AFHTTPRequestOperation *)fetchPage:(NSURL *)pageURL success:(void(^ __aut_nullable)(__aut_nullable NSDictionary *))success failure:(void(^ __aut_nullable)(__aut_nullable NSError *))failure;
+- (AFHTTPRequestOperation *)fetchPage:(NSURL *)pageURL success:(nullable AUTResponseBlock)success failure:(nullable AUTFailureBlock)failure;
 
 @end
 
-#pragma clang assume_nonnull end
+NS_ASSUME_NONNULL_END

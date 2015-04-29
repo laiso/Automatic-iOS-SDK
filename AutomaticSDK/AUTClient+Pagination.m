@@ -12,7 +12,7 @@
 
 @implementation AUTClient (Pagination)
 
-- (AFHTTPRequestOperation *)fetchPage:(NSURL *)pageURL success:(void(^)(NSDictionary *))success failure:(void(^)(NSError *))failure {
+- (AFHTTPRequestOperation *)fetchPage:(NSURL *)pageURL success:(nullable AUTResponseBlock)success failure:(nullable AUTFailureBlock)failure {
     NSParameterAssert(pageURL != nil);
 
     NSError *error;

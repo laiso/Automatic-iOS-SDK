@@ -12,7 +12,7 @@
 
 @implementation AUTClient (Vehicle)
 
-- (AFHTTPRequestOperation *)fetchVehiclesForCurrentUserWithSuccess:(void(^)(NSDictionary *))success failure:(void(^)(NSError *))failure {
+- (AFHTTPRequestOperation *)fetchVehiclesForCurrentUserWithSuccess:(nullable AUTResponseBlock)success failure:(nullable AUTFailureBlock)failure {
     return [self.requestManager
         GET:@"vehicle/"
         parameters:nil
@@ -20,7 +20,7 @@
         failure:AUTExtractError(failure)];
 }
 
-- (AFHTTPRequestOperation *)fetchVehiclesForUserWithID:(NSString *)userID success:(void(^)(NSDictionary *))success failure:(void(^)(NSError *))failure {
+- (AFHTTPRequestOperation *)fetchVehiclesForUserWithID:(NSString *)userID success:(nullable AUTResponseBlock)success failure:(nullable AUTFailureBlock)failure {
     NSParameterAssert(userID != nil);
 
     return [self.requestManager
@@ -30,7 +30,7 @@
         failure:AUTExtractError(failure)];
 }
 
-- (AFHTTPRequestOperation *)fetchVehicleWithID:(NSString *)vehicleID success:(void(^)(NSDictionary *))success failure:(void(^)(NSError *))failure {
+- (AFHTTPRequestOperation *)fetchVehicleWithID:(NSString *)vehicleID success:(nullable AUTResponseBlock)success failure:(nullable AUTFailureBlock)failure {
     NSParameterAssert(vehicleID != nil);
 
     return [self.requestManager

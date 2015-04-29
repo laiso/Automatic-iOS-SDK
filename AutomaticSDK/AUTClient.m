@@ -48,7 +48,7 @@ const NSInteger AUTClientErrorAuthorizationFailed = 1;
  *  @param failure A block to be invoked with an error if the authorization
  *                 fails.
  */
-- (void)authorizeWithCode:(NSString *)code success:(aut_nullable void(^)(void))success failure:(aut_nullable void(^)(__aut_nullable NSError *))failure;
+- (void)authorizeWithCode:(NSString *)code success:(nullable AUTSuccessBlock)success failure:(nullable AUTFailureBlock)failure;
 
 @end
 
@@ -293,7 +293,7 @@ const NSInteger AUTClientErrorAuthorizationFailed = 1;
 
 @end
 
-extern void (^AUTExtractResponseObject(void (^callback)(NSDictionary *)))(AFHTTPRequestOperation *, id) {
+extern void (^ __nullable AUTExtractResponseObject(void (^ __nullable callback)(NSDictionary * __nullable)))(AFHTTPRequestOperation * __nullable, id __nullable) {
     if (callback == nil) return nil;
 
     return ^(AFHTTPRequestOperation *_, id responseObject) {
