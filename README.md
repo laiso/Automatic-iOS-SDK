@@ -8,9 +8,9 @@
 
 ---
 
-The Automatic SDK is the best way to build iOS apps powered by [Automatic](automatic.com).
+The Automatic SDK is the best way to build iOS apps powered by [Automatic](https://www.automatic.com/).
 
-With the Automatic iOS SDK, your users can log in to your app with their [Automatic](automatic.com) accounts. Think _Facebook_ or _Twitter_ login—but rather than bringing a users' social graph, instead unlocking a wealth of automotive data that you can use to supercharge your app.
+With the Automatic iOS SDK, your users can log in to your app with their [Automatic](https://www.automatic.com/) accounts. Think _Facebook_ or _Twitter_ login—but rather than bringing a users' social graph, instead unlocking a wealth of automotive data that you can use to supercharge your app.
 
 <img src='https://github.com/automatic/Automatic-iOS-SDK/blob/master/README/log-in-with-automatic-button.png?raw=true' alt='Log in with Automatic' height='100' width='300'/>
 > Pictured: your app's new login screen
